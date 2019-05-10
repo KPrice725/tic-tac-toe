@@ -1,8 +1,10 @@
-package com.boxnotfound.tictactoe;
+package com.boxnotfound.tictactoe.game;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.boxnotfound.tictactoe.R;
 
 public class GameActivity extends AppCompatActivity {
 
