@@ -22,13 +22,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frame_game_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toLeftOf="@id/frame_game_content">
 
         <TextView
             android:id="@+id/tv_game_status"
@@ -36,8 +37,8 @@
             android:layout_height="wrap_content"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="@color/colorTileNormal"
             android:layout_marginTop="16dp"
+            android:textColor="@color/colorTileNormal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -47,10 +48,10 @@
             android:id="@+id/iv_player_status"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="Player Image"
             tools:src="@drawable/ic_player_x"
             android:tint="@color/colorTilePreviousMove"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/tv_game_status"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -61,15 +62,14 @@
         android:id="@+id/frame_game_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frame_game_status"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/frame_game_status"
+        app:layout_constraintRight_toRightOf="parent">
 
     </FrameLayout>
 
