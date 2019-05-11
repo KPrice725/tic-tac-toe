@@ -5,13 +5,11 @@ import androidx.annotation.NonNull;
 public class TicTacToeTile {
 
     private TileStatus currentState;
-    private int rowIndex;
-    private int colIndex;
+    private TileColor currentColor;
 
-    public TicTacToeTile(final int rowIndex, final int colIndex) {
+    public TicTacToeTile() {
         currentState = TileStatus.OPEN;
-        this.rowIndex = rowIndex;
-        this.colIndex = colIndex;
+        currentColor = TileColor.NORMAL;
     }
 
     public void setCurrentState(@NonNull final TileStatus currentState) {
@@ -22,11 +20,11 @@ public class TicTacToeTile {
         return currentState;
     }
 
-    public int getRowIndex() {
-        return rowIndex;
+    public void setCurrentColor(TileColor currentColor) {
+        this.currentColor = currentColor;
     }
 
-    public int getColIndex() {
-        return colIndex;
+    public TileColor getCurrentColor() {
+        return currentColor;
     }
 }
