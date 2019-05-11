@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/button_new_game"
+        android:title="@string/new_game"
+        android:icon="@drawable/ic_new_game"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/button_increment_board_size"
+        android:icon="@drawable/ic_add_column"
+        android:title="@string/add_column"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/button_decrement_board_size"
+        android:icon="@drawable/ic_remove_column"
+        android:title="@string/remove_column"
+        app:showAsAction="ifRoom"/>
+</menu>
