@@ -10,9 +10,11 @@ public class TicTacToeBoard {
         //prevent instantiation to prevent multiple game board instantiations
     }
 
-    public static TicTacToeTile[][] setupTicTacToeBoard(@IntRange(from = 4) final int rowSize) {
-        gameBoard = new TicTacToeTile[rowSize][rowSize];
-        initializeTiles(rowSize);
+    public static TicTacToeTile[][] setupTicTacToeBoard(@IntRange(from = 4) final int rowSize, final boolean newGame) {
+        if (gameBoard == null || newGame) {
+            gameBoard = new TicTacToeTile[rowSize][rowSize];
+            initializeTiles(rowSize);
+        }
         return gameBoard;
     }
 
@@ -22,7 +24,7 @@ public class TicTacToeBoard {
     private static void initializeTiles(final int rowSize) {
         for (int row = 0; row < rowSize; row++) {
             for (int col = 0; col < rowSize; col++) {
-                gameBoard[row][col] = new TicTacToeTile(row, col);
+                gameBoard[row][col] = new TicTacToeTile();
             }
         }
     }
