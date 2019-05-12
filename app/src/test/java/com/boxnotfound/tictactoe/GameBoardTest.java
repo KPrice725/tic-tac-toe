@@ -4,7 +4,6 @@ import com.boxnotfound.tictactoe.model.TicTacToeBoard;
 import com.boxnotfound.tictactoe.model.TicTacToeTile;
 import com.boxnotfound.tictactoe.model.TileStatus;
 import com.boxnotfound.tictactoe.model.wincondition.WinCondition;
-import com.boxnotfound.tictactoe.model.wincondition.WinConditionCallback;
 import com.boxnotfound.tictactoe.model.wincondition.WinConditionType;
 import com.boxnotfound.tictactoe.model.wincondition.WinConditionUtils;
 
@@ -30,7 +29,7 @@ public class GameBoardTest {
 
     @Before
     public void setup() {
-        gameBoard = TicTacToeBoard.setupTicTacToeBoard(ROW_SIZE);
+        gameBoard = TicTacToeBoard.setupTicTacToeBoard(ROW_SIZE, true);
         winConditionMap = WinConditionUtils.generateWinConditionsFromTicTacToeBoard(gameBoard);
     }
 
@@ -148,22 +147,7 @@ public class GameBoardTest {
     }
 
     private void ensureWinConditionMet(@NonNull final WinCondition winCondition) {
-        winCondition.winConditionMet(new WinConditionCallback() {
-            @Override
-            public void winConditionMet(@NonNull TileStatus winner) {
-                assertThat(winner, is(TileStatus.PLAYER_O));
-            }
-
-            @Override
-            public void openTileFound() {
-
-            }
-
-            @Override
-            public void conflictingStatesFound() {
-
-            }
-        });
+        assertThat(winCondition.winConditionMet(), is(true));
     }
 
     @After
