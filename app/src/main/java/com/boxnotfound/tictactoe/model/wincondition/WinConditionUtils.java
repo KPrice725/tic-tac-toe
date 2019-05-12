@@ -11,6 +11,16 @@ import androidx.collection.SparseArrayCompat;
 
 public class WinConditionUtils {
 
+    /*
+    For this version of Tic Tac Toe, the win conditions are as followed:
+    1.) Row - When a player controls all tiles in a single row
+    2.) Column - When a player controls all tiles in a single column
+    3.) Diagonal - When a player controls all tiles in one of the two diagonal lines
+    4.) Square - When a player controls four tiles forming a 2x2 square shape
+    5.) Corners - When a player controls the tiles in the four corners of the board
+    This class is responsible for generating the win conditions for a given gameboard.
+    */
+
     private static SparseArrayCompat<List<WinCondition>> winConditionMap;
     private static int gameBoardRowSize;
 
@@ -173,13 +183,4 @@ public class WinConditionUtils {
             winConditionMap.get(keyValue).add(winCondition);
         }
     }
-
-    public static void cleanupMap() {
-        if (winConditionMap != null) {
-            winConditionMap.clear();
-            winConditionMap = null;
-        }
-    }
-
-
 }

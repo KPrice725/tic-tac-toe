@@ -28,10 +28,4 @@ public class TicTacToeBoard {
             }
         }
     }
-
-    public static void cleanupTicTacToeBoard() {
-        if (gameBoard != null) {
-            gameBoard = null;
-        }
-    }
 }

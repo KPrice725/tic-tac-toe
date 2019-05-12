@@ -152,8 +152,6 @@ public class GameBoardTest {
 
     @After
     public void cleanup() {
-        TicTacToeBoard.cleanupTicTacToeBoard();
-        WinConditionUtils.cleanupMap();
         gameBoard = null;
         winConditionMap = null;
     }
