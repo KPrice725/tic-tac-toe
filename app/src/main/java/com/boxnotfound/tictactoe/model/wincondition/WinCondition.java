@@ -22,36 +22,33 @@ public class WinCondition {
         return tiles;
     }
 
-    public void winConditionMet(@NonNull final WinConditionCallback callback) {
+    public boolean winConditionMet() {
 
         TileStatus targetState = tiles.get(0).getCurrentState();
 
         if (targetState == TileStatus.OPEN) {
             // If there's an open tile, the win condition cannot have been met yet
-            callback.openTileFound();
-            return;
+            return false;
         }
 
         for (int i = 1; i < tiles.size(); i++) {
             TicTacToeTile tile = tiles.get(i);
             if (tile.getCurrentState() == TileStatus.OPEN) {
                 // If there's an open tile, the win condition cannot have been met yet
-                callback.openTileFound();
-                return;
+                return false;
             } else if (targetState != tile.getCurrentState()) {
                 /*
                 Both players occupy tiles in the list, this win condition can
                 never be met
                 */
-                callback.conflictingStatesFound();
-                return;
+                return false;
             }
         }
         /*
         We have made it to the end of the for loop without any conflicting or open tiles,
         this win condition has been met by the target player
         */
-        callback.winConditionMet(targetState);
+        return true;
     }
 
     public WinConditionType getType() {
