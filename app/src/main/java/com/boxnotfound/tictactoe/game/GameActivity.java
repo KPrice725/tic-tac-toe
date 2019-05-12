@@ -27,10 +27,8 @@ public class GameActivity extends AppCompatActivity implements GameFragment.OnGa
 
     private GamePresenter gamePresenter;
     private int currentPlayerDrawableResource;
-    @BindView(R.id.iv_player_status)
-    ImageView currentPlayer;
-    @BindView(R.id.tv_game_status)
-    TextView gameStatus;
+    @BindView(R.id.iv_player_status) ImageView currentPlayer;
+    @BindView(R.id.tv_game_status) TextView gameStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
