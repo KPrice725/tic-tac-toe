@@ -22,11 +22,10 @@ public class GamePresenter implements GameContract.Presenter {
     private static final int GAME_BOARD_MIN_ROW_SIZE = 4;
     private static int gameBoardRowSize = 4;
     private static int gameBoardSize = gameBoardRowSize * gameBoardRowSize;
-    private static int moveCount;
-    private static TileStatus currentPlayer;
+    private static TileStatus currentPlayer, winningPlayer;
     private static boolean gameOver;
     private static boolean firstLaunch = true;
-    private static int rowOfLastMove, columnOfLastMove;
+    private static int rowOfLastMove, columnOfLastMove, moveCount;
 
     private static SparseArrayCompat<List<WinCondition>> winConditionMap;
 
@@ -49,6 +48,7 @@ public class GamePresenter implements GameContract.Presenter {
             gameBoard = TicTacToeBoard.setupTicTacToeBoard(gameBoardRowSize, true);
             firstLaunch = false;
             gameOver = false;
+            winningPlayer = TileStatus.OPEN;
             rowOfLastMove = columnOfLastMove = -1;
             moveCount = 0;
             currentPlayer = TileStatus.PLAYER_X;
@@ -56,8 +56,15 @@ public class GamePresenter implements GameContract.Presenter {
         } else {
             gameBoard = TicTacToeBoard.setupTicTacToeBoard(gameBoardRowSize, false);
         }
+
         if (!gameOver) {
             gameView.displayPlayerTurn(currentPlayer);
+        } else {
+            if (winningPlayer != TileStatus.OPEN) {
+                gameView.displayGameWon(winningPlayer);
+            } else {
+                gameView.displayGameDraw();
+            }
         }
         setupTileListForView();
     }
@@ -118,7 +125,8 @@ public class GamePresenter implements GameContract.Presenter {
                     tile.setCurrentColor(TileColor.WINNER);
                 }
                 gameOver = true;
-                gameView.displayGameWon(currentPlayer);
+                winningPlayer = currentPlayer;
+                gameView.displayGameWon(winningPlayer);
                 break;
             }
         }

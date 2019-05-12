@@ -22,9 +22,6 @@ import com.boxnotfound.tictactoe.model.TileStatus;
 
 public class GameActivity extends AppCompatActivity implements GameFragment.OnGameUpdateListener {
 
-    private static final String GAME_LABEL_KEY = "game_label_key";
-    private static final String PLAYER_IMAGE_KEY = "player_image_key";
-
     private GamePresenter gamePresenter;
     private int currentPlayerDrawableResource;
     @BindView(R.id.iv_player_status) ImageView currentPlayer;
@@ -46,32 +43,6 @@ public class GameActivity extends AppCompatActivity implements GameFragment.OnGa
         fragmentTransaction.commit();
 
         gamePresenter = new GamePresenter(gameFragment);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(GAME_LABEL_KEY, gameStatus.getText().toString());
-        outState.putInt(PLAYER_IMAGE_KEY, currentPlayerDrawableResource);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            String gameStatusText = savedInstanceState.getString(GAME_LABEL_KEY);
-            gameStatus.setText(gameStatusText);
-            int currentPlayerColorResource;
-            if (gameStatusText.equals(getString(R.string.game_won_label))) {
-                currentPlayerColorResource = R.color.colorTileWinner;
-            } else {
-                currentPlayerColorResource = R.color.colorTilePreviousMove;
-            }
-            currentPlayerDrawableResource = savedInstanceState.getInt(PLAYER_IMAGE_KEY);
-            currentPlayer.setImageResource(currentPlayerDrawableResource);
-            currentPlayer.setColorFilter(getResources().getColor(currentPlayerColorResource));
-
-        }
     }
 
     @Override
