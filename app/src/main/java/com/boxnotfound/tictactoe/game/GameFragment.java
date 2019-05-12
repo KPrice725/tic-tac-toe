@@ -141,16 +141,9 @@ public class GameFragment extends Fragment implements GameContract.View {
             if (convertView == null) {
                 final LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 convertView = layoutInflater.inflate(R.layout.game_tile_item, parent, false);
-            } else {
-                Log.d("GameFragment", "convertView not null: " + position);
-                int convertViewWidth = convertView.getMeasuredWidth();
-                Log.d("GameFragment", "CV width: " + convertViewWidth);
             }
+
             TileImageView tileImage = convertView.findViewById(R.id.iv_game_tile);
-            if (convertView != null) {
-                int viewHeight = parent.getLayoutParams().height;
-                Log.d("GameFragment", "viewHeight: " + viewHeight);
-            }
 
             if (currentState == TileStatus.PLAYER_O) {
                 tileImage.setImageResource(R.drawable.ic_player_o);
