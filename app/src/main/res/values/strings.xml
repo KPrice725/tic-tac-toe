@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="new_game">New Game</string>
+    <string name="game_won_label">Winner!</string>
+    <string name="game_draw_label">Draw</string>
+    <string name="game_status_label">Current Player</string>
+    <string name="player_tile">Player Tile</string>
+    <string name="add_column">Add Column</string>
+    <string name="remove_column">Remove Column</string>
 </resources>
