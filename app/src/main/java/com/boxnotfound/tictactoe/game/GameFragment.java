@@ -183,10 +183,12 @@ public class GameFragment extends Fragment implements GameContract.View {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            // Pass in the width to both super parameters to ensure a square shape
             super.onMeasure(widthMeasureSpec, widthMeasureSpec);
         }
     }
 
+    // The primary interface for communications from GameFragment to GameActivity
     public interface OnGameUpdateListener {
         void onPlayerTurnChanged(@NonNull final TileStatus player);
 
