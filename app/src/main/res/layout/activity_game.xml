@@ -34,7 +34,7 @@
             android:id="@+id/tv_game_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
+            android:textSize="@dimen/size_text_game_status"
             android:textStyle="bold"
             android:textColor="@color/colorTileNormal"
             android:layout_marginTop="16dp"
@@ -45,8 +45,8 @@
 
         <ImageView
             android:id="@+id/iv_player_status"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="@dimen/size_image_player_status"
+            android:layout_height="@dimen/size_image_player_status"
             android:contentDescription="@string/player_tile"
             tools:src="@drawable/ic_player_x"
             android:tint="@color/colorTilePreviousMove"
