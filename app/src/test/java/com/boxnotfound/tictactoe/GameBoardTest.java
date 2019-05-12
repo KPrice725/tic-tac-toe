@@ -92,7 +92,7 @@ public class GameBoardTest {
         }
         List<WinCondition> winConditions = winConditionMap.get(0);
         for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.ROW) {
+            if (winCondition.getType() == WinConditionType.COLUMN) {
                 ensureWinConditionMet(winCondition);
                 break;
             }
