@@ -20,7 +20,7 @@ public class TicTacToeTile {
         return currentState;
     }
 
-    public void setCurrentColor(TileColor currentColor) {
+    public void setCurrentColor(@NonNull final TileColor currentColor) {
         this.currentColor = currentColor;
     }
 
