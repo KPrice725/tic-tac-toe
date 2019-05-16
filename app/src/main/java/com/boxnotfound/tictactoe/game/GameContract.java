@@ -9,6 +9,11 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
+/**
+ * The primary contract between the Presenter and View components of the TicTacToe game
+ * architecture.  Both components will hold references to each other, calling the respective
+ * methods in response to user interactions and model updates.
+ */
 public interface GameContract {
 
     interface Presenter extends BasePresenter {

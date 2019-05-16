@@ -20,11 +20,24 @@ import com.boxnotfound.tictactoe.R;
 import com.boxnotfound.tictactoe.model.TileColor;
 import com.boxnotfound.tictactoe.model.TileStatus;
 
+/**
+ * The main TicTacToe Activity, which implements {@link GameFragment.OnGameUpdateListener} in order
+ * to receive and handle communications from the {@link GameFragment} implementation.
+ */
 public class GameActivity extends AppCompatActivity implements GameFragment.OnGameUpdateListener {
 
+    /**
+     * Reference to the {@link GamePresenter} component, since the buttons that are used to launch
+     * a new game exist in the Activity.
+     */
     private GamePresenter gamePresenter;
-    private int currentPlayerDrawableResource;
+    /**
+     * Reference to the ImageView object representing the current player's turn.
+     */
     @BindView(R.id.iv_player_status) ImageView currentPlayer;
+    /**
+     * Reference to the TextView object that communicates the game status to the user.
+     */
     @BindView(R.id.tv_game_status) TextView gameStatus;
 
     @Override
@@ -69,27 +82,43 @@ public class GameActivity extends AppCompatActivity implements GameFragment.OnGa
         }
     }
 
+    /**
+     * Update the game status to show the next player's turn.
+     * @param player - The current player state.
+     */
     @Override
     public void onPlayerTurnChanged(@NonNull TileStatus player) {
         gameStatus.setText(getString(R.string.game_status_label));
         updateCurrentPlayerImage(player, R.color.colorTilePreviousMove);
     }
 
+    /**
+     * Update the game status to show the winning player.
+     * @param player - The winning player state.
+     */
     @Override
     public void onPlayerWin(@NonNull TileStatus player) {
         gameStatus.setText(getString(R.string.game_won_label));
         updateCurrentPlayerImage(player, R.color.colorTileWinner);
     }
 
+    /**
+     * Update the game status to show the game has ended in a draw.
+     */
     @Override
     public void onDraw() {
         gameStatus.setText(getString(R.string.game_draw_label));
-        currentPlayerDrawableResource = android.R.color.transparent;
-        currentPlayer.setImageResource(currentPlayerDrawableResource);
+        currentPlayer.setImageResource(android.R.color.transparent);
     }
 
+    /**
+     * Update the {@link #currentPlayer} UI.
+     * @param player The current player state.
+     * @param colorResource The color resource to be used.
+     */
     private void updateCurrentPlayerImage(@NonNull final TileStatus player, final int colorResource) {
 
+        int currentPlayerDrawableResource;
         if (player == TileStatus.PLAYER_O) {
             currentPlayerDrawableResource = R.drawable.ic_player_o;
         } else {
@@ -99,5 +128,4 @@ public class GameActivity extends AppCompatActivity implements GameFragment.OnGa
         currentPlayer.setImageResource(currentPlayerDrawableResource);
         currentPlayer.setColorFilter(getResources().getColor(colorResource));
     }
-
 }

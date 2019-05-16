@@ -9,25 +9,37 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.collection.SparseArrayCompat;
 
+/**
+ * Generates all {@link WinCondition} objects and maps them according to their associated
+ * tile index values.  For this version of TicTacToe, the win condition types are:
+ *
+ * {@link WinConditionType#ROW}: When a player controls all tiles in a single row
+ * {@link WinConditionType#COLUMN}: When a player controls all tiles in a single column
+ * {@link WinConditionType#DIAGONAL}: When a player controls all tiles in one of the two diagonal lines
+ * {@link WinConditionType#SQUARE}: When a player controls four tiles forming a 2x2 square shape
+ * {@link WinConditionType#CORNERS}: When a player controls the tiles in the four corners of the board
+ */
 public class WinConditionUtils {
 
-    /*
-    For this version of Tic Tac Toe, the win conditions are as followed:
-    1.) Row - When a player controls all tiles in a single row
-    2.) Column - When a player controls all tiles in a single column
-    3.) Diagonal - When a player controls all tiles in one of the two diagonal lines
-    4.) Square - When a player controls four tiles forming a 2x2 square shape
-    5.) Corners - When a player controls the tiles in the four corners of the board
-    This class is responsible for generating the win conditions for a given gameboard.
-    */
-
+    /**
+     * The map of lists of {@link WinCondition} objects arranged by game board index.
+     */
     private static SparseArrayCompat<List<WinCondition>> winConditionMap;
+    /**
+     * The number of tiles on a single row of the game board.
+     */
     private static int gameBoardRowSize;
 
     private WinConditionUtils() {
         // prevent instantiation to limit usage to static methods
     }
 
+    /**
+     * Instantiates the map and populates it by calling the various setup methods for the different
+     * win condition types.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     * @return The fully populated map of {@link WinCondition} lists.
+     */
     public static SparseArrayCompat<List<WinCondition>> generateWinConditionsFromTicTacToeBoard(@NonNull final TicTacToeTile[][] gameBoard) {
         if (winConditionMap == null) {
             winConditionMap = new SparseArrayCompat<>();
@@ -47,6 +59,9 @@ public class WinConditionUtils {
         return winConditionMap;
     }
 
+    /**
+     * Add a blank ArrayList to each index of the map, based on the size of the game board.
+     */
     private static void setupWinConditionMap() {
         int gameBoardSize = gameBoardRowSize * gameBoardRowSize;
         for (int i = 0; i < gameBoardSize; i++) {
@@ -54,6 +69,10 @@ public class WinConditionUtils {
         }
     }
 
+    /**
+     * Generates all {@link WinCondition} objects with {@link WinConditionType#ROW} properties.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     */
     private static void setupRowWinConditions(@NonNull final TicTacToeTile[][] gameBoard) {
 
         WinConditionType type = WinConditionType.ROW;
@@ -69,6 +88,10 @@ public class WinConditionUtils {
         }
     }
 
+    /**
+     * Generates all {@link WinCondition} objects with {@link WinConditionType#COLUMN} properties.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     */
     private static void setupColumnWinConditions(@NonNull final TicTacToeTile[][] gameBoard) {
 
         WinConditionType type = WinConditionType.COLUMN;
@@ -85,6 +108,10 @@ public class WinConditionUtils {
         }
     }
 
+    /**
+     * Generates all {@link WinCondition} objects with {@link WinConditionType#DIAGONAL} properties.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     */
     private static void setupDiagonalWinConditions(@NonNull final TicTacToeTile[][] gameBoard) {
 
         WinConditionType type = WinConditionType.DIAGONAL;
@@ -114,6 +141,10 @@ public class WinConditionUtils {
         addWinConditionToMap(diagonalWinCondition, sparseArrayKeyValues);
     }
 
+    /**
+     * Generates all {@link WinCondition} objects with {@link WinConditionType#SQUARE} properties.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     */
     private static void setupSquareWinConditions(@NonNull final TicTacToeTile[][] gameBoard) {
 
         WinConditionType type = WinConditionType.SQUARE;
@@ -132,6 +163,10 @@ public class WinConditionUtils {
         }
     }
 
+    /**
+     * Generates all {@link WinCondition} objects with {@link WinConditionType#CORNERS} properties.
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     */
     private static void setupCornersWinConditions(@NonNull final TicTacToeTile[][] gameBoard) {
 
         WinConditionType type = WinConditionType.CORNERS;
@@ -160,8 +195,22 @@ public class WinConditionUtils {
         addWinConditionToMap(cornersWinCondition, sparseArrayKeyValues);
     }
 
-    private static void addTileDataToLists(TicTacToeTile[][] gameBoard, ArrayList<TicTacToeTile> tiles,
-                                           ArrayList<Integer> sparseArrayKeyValues, int row, int col) {
+    /**
+     * Helper method for adding tile object data to each {@link WinCondition} object's tile list,
+     * along with converting and adding the associated tile index to a key list to be used later
+     * to add the resulting {@link WinCondition} object to the {@link #winConditionMap}.
+     *
+     * @param gameBoard The collection of {@link TicTacToeTile} objects representing the game board.
+     * @param tiles The list of tiles that will be used to create the new {@link WinCondition}
+     *              object.
+     * @param sparseArrayKeyValues The list of index values of the tiles stored in the tiles param.
+     * @param row The row index of the tile on the game board.
+     * @param col The column index of the tile on the game board.
+     */
+    private static void addTileDataToLists(@NonNull final TicTacToeTile[][] gameBoard,
+                                           @NonNull final ArrayList<TicTacToeTile> tiles,
+                                           @NonNull final ArrayList<Integer> sparseArrayKeyValues,
+                                           final int row, final int col) {
 
         TicTacToeTile tile = gameBoard[row][col];
         int sparseArrayKeyValue = calculateSparseArrayKeyValue(row, col);
@@ -169,16 +218,37 @@ public class WinConditionUtils {
         tiles.add(tile);
     }
 
-
+    /**
+     * Convert the row and column index values from the game board to a single index value, based on
+     * the formula (rowSize * rowIndex) + columnIndex
+     *
+     * For example, a 4 x 4 game board represented two-dimensionally as:
+     *          {0, 0} {0, 1} {0, 2} {0, 3}
+     *          {1, 0} {1, 1} {1, 2} {1, 3}
+     *          {2, 0} {2, 1} {2, 2} {2, 3}
+     *          {3, 0} {3, 1} {3, 2} {3, 3}
+     * This would be translate into:
+     *          00  01  02  03
+     *          04  05  06  07
+     *          08  09  10  11
+     *          12  13  14  15
+     *
+     * @param row The row index of the tile on the game board.
+     * @param col The column index of the tile on the game board.
+     * @return The converted index value.
+     */
     private static int calculateSparseArrayKeyValue(final int row, final int col) {
         return gameBoardRowSize * row + col;
     }
 
+    /**
+     * Inserts the {@link WinCondition} object into the associated index values of the
+     * {@link #winConditionMap}.
+     * @param winCondition The {@link WinCondition} object to store.
+     * @param sparseArrayKeyValues The map index values to insert the winCondition parameter into.
+     */
     private static void addWinConditionToMap(@NonNull final WinCondition winCondition, @NonNull final List<Integer> sparseArrayKeyValues) {
-        /*
-            To easily look up what winConditions are associated with each
-            game board index, add the win condition to each map
-        */
+
         for (int keyValue : sparseArrayKeyValues) {
             winConditionMap.get(keyValue).add(winCondition);
         }
