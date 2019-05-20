@@ -24,13 +24,10 @@ public class GameBoardTest {
 
     private static final int ROW_SIZE = 4;
     private TicTacToeTile[][] gameBoard;
-    private SparseArrayCompat<List<WinCondition>> winConditionMap;
-
 
     @Before
     public void setup() {
         gameBoard = TicTacToeBoard.setupTicTacToeBoard(ROW_SIZE, true);
-        winConditionMap = WinConditionUtils.generateWinConditionsFromTicTacToeBoard(gameBoard);
     }
 
     @Test
@@ -39,120 +36,43 @@ public class GameBoardTest {
     }
 
     @Test
-    public void checkWinConditionMap() {
-        assertThat(winConditionMap, notNullValue());
+    public void checkTiles() {
+        for (int row = 0; row < ROW_SIZE; row++) {
+            for (int col = 0; col < ROW_SIZE; col++) {
+                TicTacToeTile tile = gameBoard[row][col];
+                assertThat(tile, notNullValue());
+            }
+        }
     }
 
     @Test
-    public void checkGameBoardRowSize() {
+    public void checkProperNumberOfTilesInBoard() {
+        int numberOfTiles = ROW_SIZE * ROW_SIZE;
+        int tileCounter = 0;
+        for (int row = 0; row < ROW_SIZE; row++) {
+            for (int col = 0; col < ROW_SIZE; col++) {
+                tileCounter++;
+            }
+        }
+        assert(numberOfTiles == tileCounter);
+    }
+
+
+    @Test
+    public void checkGameBoardRowCount() {
         int numRows = gameBoard.length;
         assertThat(numRows, is(ROW_SIZE));
     }
 
     @Test
-    public void checkGameBoardColumnSize() {
+    public void checkGameBoardColumnCount() {
         for (TicTacToeTile[] row : gameBoard) {
             assertThat(row.length, is(ROW_SIZE));
         }
     }
 
-    @Test
-    public void ensureWinConditionsMapContainsAppropriateWinConditions() {
-        for (int row = 0; row < ROW_SIZE; row++) {
-            for (int col = 0; col < ROW_SIZE; col++) {
-                TicTacToeTile tile = gameBoard[row][col];
-                int gridIndex = ROW_SIZE * row + col;
-                List<WinCondition> winConditions = winConditionMap.get(gridIndex);
-                assertThat(winConditions, notNullValue());
-                for (WinCondition winCondition : winConditions) {
-                    assertThat(winCondition.getTiles().contains(tile), is(true));
-                }
-            }
-        }
-    }
-
-    @Test
-    public void checkRowWinCondition() {
-        for (int col = 0; col < ROW_SIZE; col++) {
-            gameBoard[0][col].setCurrentState(TileStatus.PLAYER_O);
-        }
-        List<WinCondition> winConditions = winConditionMap.get(0);
-        for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.ROW) {
-                ensureWinConditionMet(winCondition);
-                break;
-            }
-        }
-    }
-
-    @Test
-    public void checkColumnWinCondition() {
-        for (int row = 0; row < ROW_SIZE; row++) {
-            gameBoard[row][0].setCurrentState(TileStatus.PLAYER_O);
-        }
-        List<WinCondition> winConditions = winConditionMap.get(0);
-        for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.COLUMN) {
-                ensureWinConditionMet(winCondition);
-                break;
-            }
-        }
-    }
-
-    @Test
-    public void checkDiagonalWinCondition() {
-        int row = 0;
-        int col = 0;
-        for (; col < ROW_SIZE && row < ROW_SIZE; row++, col++) {
-            gameBoard[row][col].setCurrentState(TileStatus.PLAYER_O);
-        }
-        List<WinCondition> winConditions = winConditionMap.get(0);
-        for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.DIAGONAL) {
-                ensureWinConditionMet(winCondition);
-                break;
-            }
-        }
-    }
-
-    @Test
-    public void checkSquareWinCondition() {
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < 2; col++) {
-                gameBoard[row][col].setCurrentState(TileStatus.PLAYER_O);
-            }
-        }
-        List<WinCondition> winConditions = winConditionMap.get(0);
-        for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.SQUARE) {
-                ensureWinConditionMet(winCondition);
-                break;
-            }
-        }
-    }
-
-    @Test
-    public void checkCornersWinCondition() {
-        gameBoard[0][0].setCurrentState(TileStatus.PLAYER_O);
-        gameBoard[0][ROW_SIZE - 1].setCurrentState(TileStatus.PLAYER_O);
-        gameBoard[ROW_SIZE - 1][0].setCurrentState(TileStatus.PLAYER_O);
-        gameBoard[ROW_SIZE - 1][ROW_SIZE - 1].setCurrentState(TileStatus.PLAYER_O);
-        List<WinCondition> winConditions = winConditionMap.get(0);
-        for (WinCondition winCondition : winConditions) {
-            if (winCondition.getType() == WinConditionType.CORNERS) {
-                ensureWinConditionMet(winCondition);
-                break;
-            }
-        }
-    }
-
-    private void ensureWinConditionMet(@NonNull final WinCondition winCondition) {
-        assertThat(winCondition.winConditionMet(), is(true));
-    }
-
     @After
     public void cleanup() {
         gameBoard = null;
-        winConditionMap = null;
     }
 }
